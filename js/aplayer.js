@@ -5,9 +5,6 @@ $.ajax({
 	url:"https://api.muxmus.com/music",
 	dataType:"json",
 	success:function(jsonData){
-		for(var i = 0; i <= jsonData.length - 1; i++){
-			jsonData[i].cover += "@350w.webp";
-		};
 		const ap = new APlayer({
 			container: document.getElementById("aplayer"),
 			fixed: true,
