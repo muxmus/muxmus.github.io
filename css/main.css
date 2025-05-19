@@ -124,6 +124,10 @@ pre {
 	text-align: left !important;
 }
 
+.text-indent p:not(.date) {
+	text-indent: 2em;
+}
+
 .date {
 	font-size: 13px;
 }
