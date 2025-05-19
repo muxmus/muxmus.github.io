@@ -1,5 +1,5 @@
 // JavaScript Document
-document.body.addEventListener('copy',function(e){
+document.addEventListener('copy',function(e){
 	if(window.getSelection().toString() && window.getSelection().toString().length > 30){
 		setClipboardText(e);
 	}
