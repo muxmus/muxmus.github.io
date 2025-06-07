@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<meta name="theme-color" content="#E6E6E6">
+		<title>【家宽系列第一篇】公网IPv6与防火墙 ~ 木辛木杉</title>
+		<link rel="shortcut icon" type="image/x-icon" href="https://muxmus.com/favicon.ico">
+		<link rel="stylesheet" href="https://muxmus.com/css/main.css">
+		<link rel="stylesheet" href="https://muxmus.com/css/APlayer.min.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/lxgw-wenkai-screen-web/style.css">
+		<script src="https://muxmus.com/js/jquery-3.6.0.min.js"></script>
+		<script src="https://muxmus.com/js/jquery.pjax.js"></script>
+		<script src="https://muxmus.com/js/APlayer.min.js"></script>
+		<script src="https://muxmus.com/js/highlight.min.js"></script>
+		<script src="https://muxmus.com/js/highlightjs-line-numbers.min.js"></script>
+		<script src="https://unpkg.com/twikoo@1.6.39/dist/twikoo.min.js"></script>
+		<script src="https://muxmus.com/js/pjax.js"></script>
+	</head>
+	<body>
+		<div id="main-content">
+			<div class="divm text-left text-indent">
+				<div id="back">
+					<a date-pjax href="https://muxmus.com">返回首页</a>
+				</div>
+				<br>
+				<br>
+				<br>
+				<h1>【家宽系列第一篇】公网IPv6与防火墙</h1>
+				<p class="date">发布于：2025.05.19 07:45<br>编辑于：2025.05.19 07:45<br>访问量：<span id="twikoo_visitors"></span></p>
+				<br>
+				<p>IP地址（Internet Protocol Address）是用于在互联网或局域网中唯一标识设备的数字标签，类似于现实中的“门牌号”。其中的IPv4格式为32位二进制数，通常写作4组十进制数（如 192.168.1.1）。其范围也就是0 ~ 2³²-1（0.0.0.0 ~ 255.255.255.255），总计4294967296不到43亿个，去掉一些保留地址就更少了。访问互联网的设备肯定不止43亿，那“门牌号”不够用了怎么办呢，于是就有了NAT（Network Address Translation），即网络地址转换，用于在本地网络中使用私有地址。10.0.0.0 ~ 10.255.255.255、100.64.0.0 - 100.127.255.255、172.16.0.0 ~ 172.31.255.255、192.168.0.0 ~ 192.168.255.255这几段地址就是保留用来在内网中用的。你可以尝试登陆家中光猫或路由器的后台，如果入户的IPv4地址就在这三段之间，说明你正处于运营商的内网之中，而非公网。</p>
+				<br>
+				<p>想要向运营商要到公网的IPv4地址可能要加钱或者买专线，很不划算。于是就要提到另一个方案，也就是本文的标题，公网IPv6。IPv6是用于替代IPv4的下一代IP协议，格式为128位十六进制数，写作8组，范围为0 ~ 16¹²⁸-1（0000:0000:0000:0000:0000:0000:0000:0000 ~ ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff）。约3.4×10³⁸个，目前随便够用了，也就不存在NAT的问题了。</p>
+				<p>那怎么获取公网IPv6地址呢？首先可以访问<a class="lianJie" target="_blank" href="https://ipw.cn/">https://ipw.cn/</a>看看自己目前有没有公网IPv6。如果没有，可能是光猫太老了不支持IPv6，可以尝试改桥接用路由器拨号来获取IPv6。我之前的电信光猫有一个方法不用超密也可以改桥接，直接访问<a class="lianJie" target="_blank" href="http://192.168.1.1:8080/bridge_route.gch">http://192.168.1.1:8080/bridge_route.gch</a>就可以改了。如下图，点击【桥接复原】</p>
+				<div class="tuPian">
+					<a target="_blank" href="https://img.muxmus.com/blog/20250607/1.png"><img class="heng" src="https://img.muxmus.com/blog/20250607/1.png@1200w_1200h.webp" alt="" /></a>
+				</div>
+				<p>如果不行，参考<a class="lianJie" target="_blank" href="https://ipw.cn/doc/ipv6/user/enable_ipv6.html">https://ipw.cn/doc/ipv6/user/enable_ipv6.html</a>用超密改，或者直接找客服。另外在改之前确保自己知道宽带的账号密码，路由器PPPoE拨号的时候要填，如果忘了也能找客服重置。</p>
+				<br>
+				<p>有了公网IPv6地址后（不是fe开头的，那个是内网的），可以尝试在公网环境（如手机流量）下Ping一下这个地址，或者开个本地服务用手机流量访问。下面是个用Python监听8000端口的IPv6连接的例子。运行它，并用手机流量访问http://[你的IPv6地址]:8000/，如http://[ffff:ffff:ffff:ffff::]:8000/。用8000端口是因为运营商一般会封禁一些常用端口，像80、443等。</p>
+				<pre><code class="language-py">import socket
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class MyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(b"""
+            &lth1&gtIPv6 Ready Server&lt/h1&gt
+            &ltp&gtRunning on port 8000 via IPv6!&lt/p&gt
+        """)
+
+class HTTPServerV6(HTTPServer):
+    address_family = socket.AF_INET6
+
+if __name__ == '__main__':
+    server = HTTPServerV6(('::', 8000), MyHandler)
+    print("IPv6 server running on http://[::1]:8000")
+    server.serve_forever()</code></pre>
+				<br>
+				<p>如果访问不了，那大概是标题里的第二部分阻止了你。防火墙，除了电脑上有之外，光猫和路由器上一样也有。就算你在Windows防火墙上允许了应用访问网络，光猫和路由器上的防火墙也有可能阻止它。我们想要允许入站连接只能关闭这些防火墙，因为大多数路由器并没有创建规则的功能，只能一刀切，如果想要安全可以考虑软路由。</p>
+				<p>如果你是桥接，只需要管路由器的防火墙；如果你是光猫拨号，只需要管光猫的防火墙。同样这里提供一种电信光猫无需超密的关防火墙方法。如果不行就自己去搜相应运营商光猫的方法。首先访问光猫后台，一般是<a class="lianJie" target="_blank" href="http://192.168.1.1/">http://192.168.1.1/</a></p>
+				<div class="tuPian">
+					<a target="_blank" href="https://img.muxmus.com/blog/20250607/2.png"><img class="heng" src="https://img.muxmus.com/blog/20250607/2.png@1200w_1200h.webp" alt="" /></a>
+				</div>
+				<p>点击下方的【快速装维入口】，用光猫背后写的用户名密码登录。依次选择【安全】-【防火墙】-【IPv6防火墙】。</p>
+				<div class="tuPian">
+					<a target="_blank" href="https://img.muxmus.com/blog/20250607/3.png"><img class="heng" src="https://img.muxmus.com/blog/20250607/3.png@1200w_1200h.webp" alt="" /></a>
+				</div>
+				<p>可以看到防火墙的选项默认是勾选的，并且无法点击，这里点击【鼠标右键】-【检查】或者点击【F12】打开开发者面板的审查元素。点击面板左上角的选择器，然后鼠标拖动到打勾的框框上并点击，在面板上找到高亮的那一行，双击，删除末尾的“disable”，这时这个框就可以交互了，把勾取消掉。用同样的方法，删除【应用】按钮对应的“disable”，并点击【应用】按钮保存。</p>
+				<div class="tuPian">
+					<a target="_blank" href="https://img.muxmus.com/blog/20250607/4.png"><img class="heng" src="https://img.muxmus.com/blog/20250607/4.png@1200w_1200h.webp" alt="" /></a>
+				</div>
+				<br>
+				<p>路由器以小米（红米）为例，登录后台，依次点击【常用设置】-【上网设置】，找到【IPv6网络设置】下的【防火墙】选项，关闭。</p>
+				<div class="tuPian">
+					<a target="_blank" href="https://img.muxmus.com/blog/20250607/5.png"><img class="heng" src="https://img.muxmus.com/blog/20250607/5.png@1200w_1200h.webp" alt="" /></a>
+				</div>
+				<br>
+				<p>现在你就可以通过公网IPv6地址来访问家中电脑上的服务了，为了安全起见，可以通过Windows防火墙来阻止不需要的端口。打开控制面板，输入路径“控制面板\所有控制面板项\Windows Defender 防火墙”，点击左边的高级设置，打开“高级安全 Windows Defender 防火墙”，点击左边的入站规则，新建规则即可。</p>
+				<script src="https://muxmus.com/js/link.js"></script>
+				<div id="tcomment"></div>
+				<script>
+					twikoo.init({
+						envId: 'https://twikoo.muxmus.com',
+						el: '#tcomment',
+						lang: 'zh-CN',
+					})
+				</script>
+			</div>
+		</div>
+		<div id="cbl"></div>
+		<script src="https://muxmus.com/js/cbl.js"></script>
+		<div id="aplayer"></div>
+		<script src="https://muxmus.com/js/aplayer.js"></script>
+		<div id="bg"></div>
+		<script src="https://muxmus.com/js/bg.js"></script>
+	</body>
+</html>
