@@ -151,7 +151,6 @@ pre {
 	max-height: calc(100vh - 100px);
 	overflow: auto;
 	margin: 50px;
-	direction: rtl;
 	color: #fff;
 	text-align: right;
 }
@@ -176,6 +175,10 @@ pre {
 
 .js #index {
 	font-size: 18px;
+}
+
+.js #slider-link p {
+	margin: 0.5em 0;
 }
 
 .bq {
@@ -333,7 +336,6 @@ pre {
 		max-height: calc(100vh - 100px);
 		overflow: auto;
 		margin: 50px;
-		direction: rtl;
 		color: #fff;
 		text-align: center;
 	}
