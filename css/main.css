@@ -148,7 +148,7 @@ pre {
 
 .js {
 	max-width: 350px;
-	max-height: calc(100vh - 100px);
+	max-height: calc(100svh - 100px);
 	overflow: auto;
 	margin: 50px;
 	color: #fff;
@@ -332,8 +332,8 @@ pre {
 	}
 
 	.js {
-		max-width: calc(100vh - 150px);
-		max-height: calc(100vh - 100px);
+		max-width: calc(100svh - 150px);
+		max-height: calc(100svh - 100px);
 		overflow: auto;
 		margin: 50px;
 		color: #fff;
