@@ -163,6 +163,7 @@ pre {
 .js a {
 	color: #fff;
 	text-decoration: none;
+	line-height: 1.2;
 }
 
 .js a:hover {
