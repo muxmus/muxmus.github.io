@@ -149,7 +149,8 @@ pre {
 .js {
 	max-width: 350px;
 	max-height: calc(100svh - 100px);
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
 	margin: 50px;
 	color: #fff;
 	text-align: right;
