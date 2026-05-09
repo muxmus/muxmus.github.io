@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<meta name="theme-color" content="#E6E6E6">
+		<title>由claude完成的音乐半自动更新系统 ~ 木辛木杉</title>
+		<link rel="shortcut icon" type="image/x-icon" href="https://img.muxmus.com/icon/favicon.ico">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/main.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/APlayer.min.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/lxgw-wenkai-screen-web/style.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/nprogress.css">
+		<script src="https://file.muxmus.com/js/jquery-3.6.0.min.js"></script>
+		<script src="https://file.muxmus.com/js/jquery.pjax.js"></script>
+		<script src="https://file.muxmus.com/js/nprogress.js"></script>
+		<script src="https://file.muxmus.com/js/APlayer.min.js"></script>
+		<script src="https://file.muxmus.com/js/highlight.min.js"></script>
+		<script src="https://file.muxmus.com/js/highlightjs-line-numbers.min.js"></script>
+		<script src="https://file.muxmus.com/js/twikoo.min.js"></script>
+		<script src="https://file.muxmus.com/js/pjax.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="container-left">
+			<div id="main-content">
+			<div class="divm text-left text-indent">
+				<h1>由claude完成的音乐半自动更新系统</h1>
+				<p class="date">发布于：2026.05.09 20:10<br>编辑于：2026.05.09 20:10<br>访问量：<span id="twikoo_visitors"></span></p>
+				<br>
+				<p>我的音乐一直以来有两个平台，一个是基于APlayer修改而来的在线网站<a class="lianJie" target="_blank" href="https://music.muxmus.com/">music.muxmus.com</a>（博客的音乐也是），一个是在手机上通过<a class="lianJie" target="_blank" href="https://moriafly.com/saltplayer/">Salt Player</a>进行本地播放。</p>
+				<p>网站是通过json索引，音乐转码成aac，手机是原始flac，通过QQ音乐下载再用<a class="lianJie" target="_blank" href="https://um.muxmus.com/">音乐解锁</a>解密，或者盗版网站下载，双语歌词是用<a class="lianJie" target="_blank" href="https://github.com/jitwxs/163MusicLyrics">163MusicLyrics</a>下载。刚开始大批量处理时只需要写个批处理程序读取<a class="lianJie" target="_blank" href="https://api.injahow.cn/meting/">Meting-API</a>构建json，批量下载专辑封面就行，QQ音乐和163MusicLyrics也都支持批量下载。但是后期处理新增的歌曲时就显得格外麻烦，因为即使只新增一首，也得把前面的流程全跑一遍（下载音乐、专辑图、歌词，转码上传服务器，编辑json，还要传到手机）。</p>
+				<p>实在受不了于是决定写个半自动系统辅助更新，并且带有webUI可以手动上传无法自动化的音乐和歌词，手机也可以访问并下载音乐文件，不再需要手动上传到手机了。尝试用claude完成，开始只是用的网页版的免费计划，没用claude code，把需求告诉它之后，先让它给我规划结构，然后让它和我确定有什么疑问，经过几次debug和修改后终于完成，第一次一次性出了13个文件，居然没有卡token，后续修改倒是卡了几次，但每次也就几小时。</p>
+				<p>详细代码位于<a class="lianJie" target="_blank" href="https://github.com/muxmus/music-sycn">https://github.com/muxmus/music-sycn</a></p>
+				<p>文件结构如下，完全是它自主完成的，甚至github上的README.md大部分也是它写的，我只规定了程序需实现什么目的：</p>
+				<pre><code>music-sync/
+├── main.py              # 启动入口
+├── config.py            # 所有配置（修改这里）
+├── state.json           # 程序运行状态（自动生成）
+├── requirements.txt
+├── core/
+│   ├── monitor.py       # 定时轮询与比对
+│   ├── notifier.py      # Webhook 通知
+│   ├── downloader.py    # 封面下载
+│   ├── processor.py     # 压缩、封面嵌入、metadata
+│   ├── uploader.py      # WebDAV 上传
+│   └── json_manager.py  # JSON 读写
+└── web/
+    ├── app.py           # Flask 应用
+    ├── routes.py        # 所有路由
+    └── templates/
+        └── index.html   # 管理页面</code></pre>
+				<p>最终效果如下：</p>
+				<div class="tuPian">
+					<img  data-preview class="heng" src="https://img.muxmus.com/blog/20260509/1.png@1200w_1200h.webp" alt="" />
+				</div>
+				<div class="tuPian">
+					<img  data-preview class="heng" src="https://img.muxmus.com/blog/20260509/2.png@1200w_1200h.webp" alt="" />
+				</div>
+				<div class="tuPian">
+					<img  data-preview class="heng" src="https://img.muxmus.com/blog/20260509/3.png@1200w_1200h.webp" alt="" />
+				</div>
+				<p>能够实现每小时检测api是否更新，若更新则通过Webhook通知我，并自己下载专辑图做好准备，待我在管理网页上传音乐和歌词后，自动压缩aac连同专辑图和歌词上传服务器并更新json，同时在网页的待下载页留一份内嵌了专辑图的flac和歌词供手机下载。也可以手动新增其他来源的音乐，它同样能够自动化处理。也就是我的任务简化成了只需要收到通知后下载音乐和歌词并上传，然后就可以坐等更新后下载到手机了。</p>
+				<p>使用下来比较惊喜的是，claude在我的提示词以外还设计了统一输出的日志模块用于调试，这点是我没有预料到的。而且前端的样式也很不错，给出的代码运行下来几乎没有bug，几次修改大多数都是因为我又提出了额外的要求。还有就是网页端的体验也很好，像是集成了一个小型的Agent，能够创建修改文件，而不是只能在对话中给出代码。</p>
+				<br>
+				<script src="https://file.muxmus.com/js/link.js"></script>
+				<div id="tcomment"></div>
+				<script>
+					twikoo.init({
+						envId: 'https://twikoo.muxmus.com',
+						el: '#tcomment',
+						lang: 'zh-CN',
+					})
+				</script>
+			</div>
+			</div>
+			</div>
+			<div id="container-right"></div>
+		</div>
+		<div id="cbl"></div>
+		<script src="https://file.muxmus.com/js/cbl.js"></script>
+		<div id="aplayer"></div>
+		<script src="https://file.muxmus.com/js/aplayer.js"></script>
+		<div id="bg"></div>
+		<script src="https://file.muxmus.com/js/bg.js"></script>
+	</body>
+</html>

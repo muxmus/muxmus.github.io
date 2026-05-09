@@ -9,8 +9,10 @@
 		<link rel="stylesheet" href="https://file.muxmus.com/css/main.css">
 		<link rel="stylesheet" href="https://file.muxmus.com/css/APlayer.min.css">
 		<link rel="stylesheet" href="https://file.muxmus.com/css/lxgw-wenkai-screen-web/style.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/nprogress.css">
 		<script src="https://file.muxmus.com/js/jquery-3.6.0.min.js"></script>
 		<script src="https://file.muxmus.com/js/jquery.pjax.js"></script>
+		<script src="https://file.muxmus.com/js/nprogress.js"></script>
 		<script src="https://file.muxmus.com/js/APlayer.min.js"></script>
 		<script src="https://file.muxmus.com/js/highlight.min.js"></script>
 		<script src="https://file.muxmus.com/js/highlightjs-line-numbers.min.js"></script>
@@ -18,7 +20,9 @@
 		<script src="https://file.muxmus.com/js/pjax.js"></script>
 	</head>
 	<body>
-		<div id="main-content">
+		<div id="container">
+			<div id="container-left">
+			<div id="main-content">
 			<div class="divm text-left">
 				<div id="back">
 					<a date-pjax href="https://muxmus.com">返回首页</a>
@@ -43,15 +47,12 @@
 					<br>
 					<a class="lianJie" target="_blank" href="//github.com/1210718010/1210718010.github.io/blob/master/js/jquery-3.6.0.min.js">jquery-3.6.0.min.js</a>
 				</ul>
-				<pre><code class="language-html">
-&ltlink rel="stylesheet" href="https://muxmus.com/blog/20220731/bfq.css"&gt
+				<pre><code class="language-html">&ltlink rel="stylesheet" href="https://muxmus.com/blog/20220731/bfq.css"&gt
 &ltscript src="https://file.muxmus.com/js/jquery-3.6.0.min.js"&gt&lt/script&gt
-&ltscript src="https://muxmus.com/blog/20220731/bfq.js"&gt&lt/script&gt
-				</code></pre>
+&ltscript src="https://muxmus.com/blog/20220731/bfq.js"&gt&lt/script&gt</code></pre>
 				<p class="zhuShi">ps：bfq.js文件可能需要引用在末尾，也就是&lt/body&gt的前面。</p>
 				<p>下面是带注释讲解的js代码</p>
-				<pre><code class="language-js">
-// JavaScript Document
+				<pre><code class="language-js">// JavaScript Document
 //如果要引用到别的网站，需要下载svg图标放在相同目录，或者修改svg的地址在前面加上“https://muxmus.com”
 //如果你和我一样用的是网易云的歌，那么请注意，需要vip的歌曲只能试听30秒，失效的歌曲会自动跳过
 document.write("&ltdiv id=\"bfq\" class=\"divb\"&gt");
@@ -294,8 +295,7 @@ $(function(){
 		$('#music')[0].volume = vol;
 	});
 });
-//调整音量
-				</code></pre>
+//调整音量</code></pre>
 				<br>
 				<script src="https://file.muxmus.com/js/link.js"></script>
 				<div id="tcomment"></div>
@@ -307,6 +307,9 @@ $(function(){
 					})
 				</script>
 			</div>
+			</div>
+			</div>
+			<div id="container-right"></div>
 		</div>
 		<div id="cbl"></div>
 		<script src="https://file.muxmus.com/js/cbl.js"></script>

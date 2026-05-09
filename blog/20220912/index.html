@@ -9,8 +9,10 @@
 		<link rel="stylesheet" href="https://file.muxmus.com/css/main.css">
 		<link rel="stylesheet" href="https://file.muxmus.com/css/APlayer.min.css">
 		<link rel="stylesheet" href="https://file.muxmus.com/css/lxgw-wenkai-screen-web/style.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/nprogress.css">
 		<script src="https://file.muxmus.com/js/jquery-3.6.0.min.js"></script>
 		<script src="https://file.muxmus.com/js/jquery.pjax.js"></script>
+		<script src="https://file.muxmus.com/js/nprogress.js"></script>
 		<script src="https://file.muxmus.com/js/APlayer.min.js"></script>
 		<script src="https://file.muxmus.com/js/highlight.min.js"></script>
 		<script src="https://file.muxmus.com/js/highlightjs-line-numbers.min.js"></script>
@@ -18,7 +20,9 @@
 		<script src="https://file.muxmus.com/js/pjax.js"></script>
 	</head>
 	<body>
-		<div id="main-content">
+		<div id="container">
+			<div id="container-left">
+			<div id="main-content">
 			<div class="divm">
 				<div id="back">
 					<a date-pjax href="https://muxmus.com">返回首页</a>
@@ -29,22 +33,22 @@
 				<p class="date">2022.09.12 10:05 | 访问量:<span id="twikoo_visitors"></span></p>
 				<br>
 				<div class="tuPian">
-					<a target="_blank" href="https://img.muxmus.com/blog/20220912/1.jpg"><img class="shu" src="https://img.muxmus.com/blog/20220912/1.jpg@1200w_1200h.webp" alt="" /></a>
+					<img data-preview class="shu" src="https://img.muxmus.com/blog/20220912/1.jpg@1200w_1200h.webp" alt="" />
 				</div>
 				<div class="tuPian">
-					<a target="_blank" href="https://img.muxmus.com/blog/20220912/2.jpg"><img class="heng" src="https://img.muxmus.com/blog/20220912/2.jpg@1200w_1200h.webp" alt="" /></a>
+					<img data-preview class="heng" src="https://img.muxmus.com/blog/20220912/2.jpg@1200w_1200h.webp" alt="" />
 				</div>
 				<div class="tuPian">
-					<a target="_blank" href="https://img.muxmus.com/blog/20220912/3.jpg"><img class="heng" src="https://img.muxmus.com/blog/20220912/3.jpg@1200w_1200h.webp" alt="" /></a>
+					<img data-preview class="heng" src="https://img.muxmus.com/blog/20220912/3.jpg@1200w_1200h.webp" alt="" />
 				</div>
 				<div class="tuPian">
-					<a target="_blank" href="https://img.muxmus.com/blog/20220912/4.jpg"><img class="heng" src="https://img.muxmus.com/blog/20220912/4.jpg@1200w_1200h.webp" alt="" /></a>
+					<img data-preview class="heng" src="https://img.muxmus.com/blog/20220912/4.jpg@1200w_1200h.webp" alt="" />
 				</div>
 				<div class="tuPian">
-					<a target="_blank" href="https://img.muxmus.com/blog/20220912/5.jpg"><img class="shu" src="https://img.muxmus.com/blog/20220912/5.jpg@1200w_1200h.webp" alt="" /></a>
+					<img data-preview class="shu" src="https://img.muxmus.com/blog/20220912/5.jpg@1200w_1200h.webp" alt="" />
 				</div>
 				<div class="tuPian">
-					<a target="_blank" href="https://img.muxmus.com/blog/20220912/6.jpg"><img class="heng" src="https://img.muxmus.com/blog/20220912/6.jpg@1200w_1200h.webp" alt="" /></a>
+					<img data-preview class="heng" src="https://img.muxmus.com/blog/20220912/6.jpg@1200w_1200h.webp" alt="" />
 				</div>
 				<script src="https://file.muxmus.com/js/link.js"></script>
 				<div id="tcomment"></div>
@@ -56,6 +60,9 @@
 					})
 				</script>
 			</div>
+			</div>
+			</div>
+			<div id="container-right"></div>
 		</div>
 		<div id="cbl"></div>
 		<script src="https://file.muxmus.com/js/cbl.js"></script>

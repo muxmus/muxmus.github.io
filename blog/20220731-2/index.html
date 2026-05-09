@@ -9,8 +9,10 @@
 		<link rel="stylesheet" href="https://file.muxmus.com/css/main.css">
 		<link rel="stylesheet" href="https://file.muxmus.com/css/APlayer.min.css">
 		<link rel="stylesheet" href="https://file.muxmus.com/css/lxgw-wenkai-screen-web/style.css">
+		<link rel="stylesheet" href="https://file.muxmus.com/css/nprogress.css">
 		<script src="https://file.muxmus.com/js/jquery-3.6.0.min.js"></script>
 		<script src="https://file.muxmus.com/js/jquery.pjax.js"></script>
+		<script src="https://file.muxmus.com/js/nprogress.js"></script>
 		<script src="https://file.muxmus.com/js/APlayer.min.js"></script>
 		<script src="https://file.muxmus.com/js/highlight.min.js"></script>
 		<script src="https://file.muxmus.com/js/highlightjs-line-numbers.min.js"></script>
@@ -18,7 +20,9 @@
 		<script src="https://file.muxmus.com/js/pjax.js"></script>
 	</head>
 	<body>
-		<div id="main-content">
+		<div id="container">
+			<div id="container-left">
+			<div id="main-content">
 			<div class="divm text-left">
 				<div id="back">
 					<a date-pjax href="https://muxmus.com">返回首页</a>
@@ -42,14 +46,11 @@
 					<br>
 					<a class="lianJie" target="_blank" href="//github.com/1210718010/1210718010.github.io/blob/master/js/search.js">search.js</a>
 				</ul>
-				<pre><code class="language-html">
-&ltlink rel="stylesheet" href="https://file.muxmus.com/css/search.css"&gt
-&ltscript src="https://file.muxmus.com/js/search.js"&gt&lt/script&gt
-				</code></pre>
+				<pre><code class="language-html">&ltlink rel="stylesheet" href="https://file.muxmus.com/css/search.css"&gt
+&ltscript src="https://file.muxmus.com/js/search.js"&gt&lt/script&gt</code></pre>
 				<p class="zhuShi">ps：search.js文件可能需要引用在正文中，也就是&ltbody&gt和&lt/body&gt之间</p>
 				<p>下面是带注释讲解的js代码</p>
-				<pre><code class="language-js">
-// JavaScript Document
+				<pre><code class="language-js">// JavaScript Document
 document.write("&ltdiv class=\"divm\"&gt");
 document.write("	&ltinput type=\"text\" value=\"\" id=\"search\" /&gt");
 document.write("	&ltdiv class=\"divin\"&gt");
@@ -69,8 +70,7 @@ $("#search").bind("keydown",function(e){
 	//这里的13是回车，你也可以改成其他键
 		getinput();
 	}
-});
-				</code></pre>
+});</code></pre>
 				<br>
 				<script src="https://file.muxmus.com/js/link.js"></script>
 				<div id="tcomment"></div>
@@ -82,6 +82,9 @@ $("#search").bind("keydown",function(e){
 					})
 				</script>
 			</div>
+			</div>
+			</div>
+			<div id="container-right"></div>
 		</div>
 		<div id="cbl"></div>
 		<script src="https://file.muxmus.com/js/cbl.js"></script>
