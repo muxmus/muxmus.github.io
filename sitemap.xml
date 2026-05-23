@@ -7,16 +7,7 @@
             <loc>https://muxmus.com/about/</loc>
       </url>
       <url>
-            <loc>https://muxmus.com/blog/</loc>
-      </url>
-      <url>
-            <loc>https://muxmus.com/archive/</loc>
-      </url>
-      <url>
             <loc>https://muxmus.com/project/</loc>
-      </url>
-      <url>
-            <loc>https://muxmus.com/tab/</loc>
       </url>
       <url>
             <loc>https://muxmus.com/blog/20220727/</loc>
@@ -40,12 +31,15 @@
             <loc>https://muxmus.com/blog/20250607/</loc>
       </url>
       <url>
+            <loc>https://i.muxmus.com</loc>
+      </url>
+      <url>
+            <loc>https://tab.muxmus.com/</loc>
+      </url>
+      <url>
             <loc>https://music.muxmus.com</loc>
       </url>
       <url>
             <loc>https://um.muxmus.com</loc>
-      </url>
-      <url>
-            <loc>https://i.muxmus.com</loc>
       </url>
 </urlset>
